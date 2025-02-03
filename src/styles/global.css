@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #f00;
+  --font-primary: Monaspace-krypton;
+  --font-secondary: Dharma-Gothic;
+  --color-red-play: #FF4655;
+  --color-white-play: #ECE8E1;
+  --color-black-play: #0F1923;
+}

@@ -1,0 +1,27 @@
+---
+interface Props {
+  href: string
+  label: string
+  isHome?: boolean
+}
+
+const { href, label, isHome } = Astro.props
+
+const homeStyle = isHome ? 'bg-[#cbd5e0] text-black home-polygon w-60 hover:bg-[#e2e8f0]' : ' w-36'
+const routeCurrentStyle = Astro.url.pathname === href ? 'font-bold' : 'font-light'
+---
+
+<a
+  class=`${homeStyle} ${routeCurrentStyle} py-3 text-center duration-400 transition-all hover:font-bold`
+  href={href}
+>
+  { label }
+</a>
+
+<style>
+  .home-polygon {
+    clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+  }
+</style>
+
+

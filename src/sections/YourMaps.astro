@@ -1,0 +1,45 @@
+<section class="max-w-[1920px] mx-auto bg-red-play flex flex-col-reverse lg:flex-row items-center justify-center py-14">
+  <div class="flex flex-col justify-center px-6 py-4">
+    <span class="text-white-play text-5xl lg:text-8xl font-semibold font-secondary mb-3 lg:mb-6 max-w-xl">LOS MAPAS</span>
+    <p class="text-white-play text-lg lg:text-xl font-semibold">PELEA ALREDEDOR DEL MUNDO</p>
+    <p class="text-justify text-sm lg:text-lg text-white-play max-w-[540px]">Cada mapa es un campo de batalla para demostrar tu pensamiento creativo. Están diseñados especialmente para estrategias de equipo, jugadas espectaculares y momentos para remontar. Haz la jugada que otros imitarán en el futuro.</p>
+    <a
+      class="bg-black-play text-white-play w-64 font-medium transition-all duration-300 ease-in-out mt-3 py-5 text-center hover:bg-white-play hover:text-black-play"
+      href=""
+    >
+      VER TODOS LOS MAPAS
+    </a> 
+  </div>
+  <div class="flex w-[360px] h-[200px] lg:w-[600px] lg:h-[420px]">
+    <img
+      src="/map-index-1.webp"
+      alt="Imagen de un spray grupal"
+    >
+    <img
+      src="/map-index-2.webp"
+      alt="Imagen de un spray grupal"
+    >
+    <img
+      src="/map-index-3.webp"
+      alt="Imagen de un spray grupal"
+    >
+  </div>
+</section>
+
+<style>
+  section div:last-child img {
+    width: 0px;
+    flex-grow: 1;
+    object-fit: cover;
+    opacity: .8s;
+    transition: .5s ease;
+  }
+
+  section div:last-child img:hover {
+    cursor: crosshair;
+    width: 300px;
+    opacity: 1;
+    filter: contrast(120%);
+  }
+</style>
+

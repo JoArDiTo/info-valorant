@@ -1,0 +1,48 @@
+---
+import Github from '@icons/Github.astro';
+import Discord from '@icons/Discord.astro';
+import X from '@icons/X.astro';
+import Youtube from '@icons/Youtube.astro';
+import Instagram from '@icons/Instagram.astro';
+import Facebook from '@icons/Facebook.astro';
+import RiotGames from '@icons/RiotGames.astro';
+
+const year = new Date().getFullYear()
+---
+<footer 
+  class="bg-black-play flex flex-col items-center pt-8 pb-24 text-white">
+  
+  <h1 class="font-primary text-xl">Visita las redes oficiales</h1>
+
+  <section class="flex justify-between gap-x-5 items-center gap-y-6 py-4 lg:px-64 lg:gap-x-12">
+    <a href="https://x.com/valorantlatam" target="_blank">
+      <X class="w-8 h-8 lg:w-10 lg:h-10 text-white hover:scale-125 hover:text-red-play transition-all duration-300" />
+    </a>
+    <a href="https://www.youtube.com/channel/UClfAp7i_XZXlkQSMQkRcmuQ" target="_blank">
+      <Youtube class="w-12 h-12 lg:w-14 lg:h-14 text-white hover:scale-125 hover:text-red-play transition-all duration-300" />
+    </a>
+    <a href="https://www.instagram.com/valorantlatam" target="_blank">
+      <Instagram class="w-12 h-12 lg:w-14 lg:h-14 text-white hover:scale-125 hover:text-red-play transition-all duration-300" />
+    </a>
+    <a href="https://www.facebook.com/latamVALORANT/" target="_blank">
+      <Facebook class="w-10 h-10 lg:w-12 lg:h-12 text-white hover:scale-125 hover:text-red-play transition-all duration-300" />
+    </a>
+    <a href="https://discord.com/invite/riotgameslatam" target="_blank">
+      <Discord class="w-12 h-12 lg:w-14 lg:h-14 text-white hover:scale-125 hover:text-red-play transition-all duration-300" />
+    </a>
+  </section>
+
+  <section class=" flex flex-col justify-center gap-x-5 items-center gap-y-6 pt-8 lg:flex-row lg:px-64 lg:gap-x-12">
+    <span class="text-sm lg:text-xl text-center text-white">
+      &copy; {year} Info Valorant | Web sin fines de lucro
+    </span>
+    <a href="https://github.com/JoArDiTo/info-valorant" target="_blank">
+      <Github class="w-16 h-16 text-white hover:scale-125 hover:text-red-play transition-all duration-300" />
+    </a>
+  </section>
+
+  <a class="pt-12" href="https://www.riotgames.com/es-419" target="_blank">
+    <RiotGames class="w-48 h-16 opacity-40 text-white hover:scale-125 hover:opacity-100 hover:text-red-play transition-all duration-300" />
+  </a>
+</footer>
+

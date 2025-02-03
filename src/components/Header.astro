@@ -1,0 +1,46 @@
+---
+import Anchor from '@components/Anchor.astro'
+
+const ROUTES = [
+  {
+    label: 'AGENTES',
+    href: '/agentes'
+  },
+  {
+    label: 'CONTENIDO',
+    href: '/contenido'
+  },
+  {
+    label: 'INICIO',
+    href: '/'
+  },
+  {
+    label: 'MODALIDADES',
+    href: '/modalidades'
+  },
+  {
+    label: 'STATS',
+    href: '/stats'
+  }
+]
+---
+<header class="bg-black-play py-6 px-12 text-white flex justify-between items-center lg:block lg:px-4">
+  <!-- Vista web -->
+  <nav 
+    class="max-w-5xl mx-auto bg-gray-700 bg-opacity-40 hidden lg:flex lg:justify-center" 
+    style="clip-path: polygon(0 0, 100% 0, 91% 100%, 9% 100%);"
+  >
+    {
+      ROUTES.map(({ label, href }) => <Anchor href={href} label={label} isHome={href === '/'} />) 
+    }
+  </nav>
+
+  <!-- Vista móvil -->
+  <img
+    class="w-28 lg:hidden" 
+    src="/logo-header.webp"
+    alt="" >
+  <div class="text-7xl lg:hidden">
+    ×
+  </div>
+</header>
