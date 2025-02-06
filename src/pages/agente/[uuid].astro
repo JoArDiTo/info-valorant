@@ -1,0 +1,52 @@
+---
+import type { GetStaticPaths } from "astro";
+import Layout from '@layouts/Layout.astro';
+import { getAgents } from '@api/query';
+
+export const prerender = true
+
+export const getStaticPaths = ( async () => {
+  const agents = await getAgents();
+
+  return agents.map((agent) => {
+    return {
+      params: { uuid: agent.uuid },
+      props: { agent }
+    }
+  })
+}) satisfies GetStaticPaths;
+
+const { agent } = Astro.props
+const borderColor = '#' + agent.backgroundGradientColors[0];
+const agentName = agent.displayName.toUpperCase();
+---
+
+<Layout title=`Info Valorant | Agentes | ${agent.displayName}`>
+  <section class="relative py-12 lg:py-6 max-w-5xl mx-auto flex flex-col items-center">
+    <button 
+      onclick="history.back()"
+      class="absolute left-12 top-4 lg:left-24 text-white cursor-pointer text-2xl lg:text-4xl z-10 font-secondary transition-colors hover:text-red-play"
+    >
+      VOLVER ATRÁS
+    </button>
+    <div 
+      class="bg-contain bg-no-repeat bg-center mb-7"
+      style=`background-image: url(${agent.background})`
+    >
+      <img 
+        transition:name=`image-${agent.uuid}` 
+        class="w-[3000px] lg:w-[780px]" 
+        src={agent.fullPortrait}
+        alt=`Imagen de ${agent.displayName}`
+      >
+    </div>
+
+    <span 
+      class="text-5xl font-extrabold font-primary mb-12"
+      style=`color: ${borderColor}; filter: drop-shadow(0px 0px 10px ${borderColor});`  
+    >
+      {agentName}
+    </span>
+  </section>
+</Layout>
+

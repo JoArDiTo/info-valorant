@@ -1,10 +1,29 @@
 ---
-import Layout from "@layouts/Layout.astro";
+import Layout from '@layouts/Layout.astro';
+import { getAgents } from '@api/query.ts';
+import AgentCard from '@components/AgentCard.astro';
+
+const agents = await getAgents();
 ---
 
 <Layout title="Info Valorant | Agentes">
-  <section class="max-w-[1920px] text-white-play mx-auto flex flex-col items-center justify-center min-h-[70vh]">
-    <h1 class="text-xl">Agentes</h1>
-    <p>En construcción</p>
+  <section class="max-w-6xl my-16 px-4 mx-auto flex flex-col text-white">
+    <h1 class="text-7xl font-semibold text-center mb-5 font-secondary">AGENTES</h1>
+
+    <article class="grid justify-items-center gap-y-6 sm:gap-y-9 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 lg:gap-y-13 mt-8">
+      {
+        agents.map(({ uuid, displayName, displayIcon, bustPortrait, backgroundGradientColors, role }) => (
+          <AgentCard
+            id={`agent-${role?.displayName.toLowerCase()}`} 
+            uuid={uuid}
+            displayName={displayName}
+            displayIcon={displayIcon}
+            bustPortrait={bustPortrait}
+            backgroundGradientColors={backgroundGradientColors}
+            roleName={`${role?.displayName.toUpperCase()}`}
+          />
+        ))
+      }
+    </article>
   </section>
-</Layou>
+</Layout>
