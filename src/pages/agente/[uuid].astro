@@ -2,6 +2,7 @@
 import type { GetStaticPaths } from "astro";
 import Layout from '@layouts/Layout.astro';
 import { getAgents } from '@api/query';
+import AbiltyCard from "@components/AbiltyCard.astro";
 
 export const prerender = true
 
@@ -22,7 +23,7 @@ const agentName = agent.displayName.toUpperCase();
 ---
 
 <Layout title=`Info Valorant | Agentes | ${agent.displayName}`>
-  <section class="relative py-12 lg:py-6 max-w-5xl mx-auto flex flex-col items-center">
+  <section class="relative pt-12 lg:pt-6 max-w-5xl mx-auto flex flex-col items-center">
     <button 
       onclick="history.back()"
       class="absolute left-12 top-4 lg:left-24 text-white cursor-pointer text-2xl lg:text-4xl z-10 font-secondary transition-colors hover:text-red-play"
@@ -48,5 +49,53 @@ const agentName = agent.displayName.toUpperCase();
       {agentName}
     </span>
   </section>
-</Layout>
 
+  <section class="max-w-4xl py-8 mx-auto flex flex-col">
+    <!-- Descripcion -->
+    <article 
+      class="mx-6 lg:mx-3 py-8 px-4 bg-black-play rounded-lg flex flex-col lg:flex-row border-2 items-center shadow-2xl"
+      style=`border-color: ${borderColor};`  
+    >
+      <img
+        class="w-44 lg:w-48 border-white" 
+        src={agent.displayIcon} 
+        alt=`Icono de ${agent.displayName}`
+      >
+      <div class="px-5 py-2 text-white-play">
+        <div class="flex items-center gap-x-3 pb-3">
+          <img 
+            class="w-12 h-12"
+            src={agent.role?.displayIcon}
+            alt=""
+          >
+          <span class="font-secondary text-4xl">{agent.role?.displayName.toUpperCase()}</span>
+        </div>
+        <p class="text-sm lg:text-lg text-justify lg:w-full">{agent.description}</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="max-w-7xl py-10 mx-auto flex flex-col">
+    <!-- Habilidades -->
+    <span 
+      class="text-4xl font-extrabold font-primary mb-12 text-center"
+      style=`color: ${borderColor}; filter: drop-shadow(0px 0px 10px ${borderColor});`  
+    >
+      HABILIDADES
+    </span>
+
+    <div class="flex flex-wrap justify-center gap-y-6">
+      {
+        agent.abilities.map((ability) => (
+          <AbiltyCard
+            displayIcon={ability.displayIcon}
+            displayName={ability.displayName}
+            description={ability.description}
+            backgroundGradientColors={agent.backgroundGradientColors}
+          />
+        ))
+      }
+    </div>
+  </section>
+  
+</Layout>

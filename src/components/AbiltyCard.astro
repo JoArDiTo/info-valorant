@@ -1,0 +1,24 @@
+---
+interface Props {
+  displayIcon: string | null;
+  displayName: string;
+  description: string;
+  backgroundGradientColors: string[];
+}
+
+const { displayIcon, displayName, description, backgroundGradientColors } = Astro.props;
+const borderColor = '#' + backgroundGradientColors[0];
+
+---
+<article 
+  class="w-72 min-h-96 mx-6 lg:mx-3 py-8 px-4 bg-black-play rounded-lg flex flex-col border-2 items-center shadow-2xl text-white-play"
+  style={`border-color: ${borderColor};`}
+>
+  <img
+    class="w-24 lg:w-32" 
+    src={displayIcon} 
+    alt={`Icono de ${displayName}`}
+  />
+  <span class="font-secondary text-3xl mb-2">{displayName.toUpperCase()}</span>
+  <p class="text-sm lg:text-base text-justify lg:w-full">{description}</p>
+</article>
