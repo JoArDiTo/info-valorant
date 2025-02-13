@@ -1,0 +1,19 @@
+---
+interface Props {
+  divisionName: string;
+  tierName: string;
+  largeIcon: string | undefined;
+}
+
+const { divisionName, tierName, largeIcon } = Astro.props;
+---
+
+
+<li class="flex flex-col items-center gap-2 border bg-black-play text-white-play rounded-xl py-4 px-2 shadow-lg">
+  <img
+    class="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32"
+    src={largeIcon}
+    alt={divisionName}
+  />
+  <p class="text-xl sm:text-2xl lg:text-3xl font-secondary">{tierName}</p>
+</li>

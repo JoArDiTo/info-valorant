@@ -2,16 +2,41 @@
 import Layout from '@layouts/Layout.astro';
 import { getGameModes, getLastCompetitiveTiers } from '@api/query';
 import GameModeCard from '@components/GameModeCard.astro';
+import TierCard from '@components/TierCard.astro';
+import BentoItem from '@components/BentoItem.astro';
 
 const gameModes = await getGameModes();
 const competitiveTiers = await getLastCompetitiveTiers();
 
 const gameModesWithIcons = gameModes.filter(gameMode => gameMode.displayIcon !== null);
 const competitiveTiersWithIcons = competitiveTiers.tiers.filter(tier => tier.tier > 2);
+
+const BENTO_ITEMS_DATA = [
+  {
+    imageUrl: "bento-images/bento-1.webp",
+    altText: "Imagen del Bento Item 1",
+    style: "col-span-1 row-span-2"
+  },
+  {
+    imageUrl: "bento-images/bento-2.webp",
+    altText: "Imagen del Bento Item 2",
+    style: "col-span-2 row-span-1"
+  },
+  {
+    imageUrl: "bento-images/bento-3.webp",
+    altText: "Imagen del Bento Item 3",
+    style: "col-span-2 row-span-1"
+  },
+  {
+    imageUrl: "bento-images/bento-4.webp",
+    altText: "Imagen del Bento Item 4",
+    style: "col-span-3 row-span-1"
+  }
+]
 ---
 
 <Layout title="Info Valorant | Modalidades">
-  <section class="max-w-[1920px] my-16 text-white-play mx-auto flex flex-col items-center justify-center">
+  <section class="max-w-[1920px] bg-black-play py-16 text-white-play mx-auto flex flex-col items-center justify-center">
     <h1 class="text-7xl font-semibold text-center mb-5 font-secondary">MODALIDADES</h1>
     <ul class="flex flex-col gap-y-6 mx-2">
       {
@@ -27,32 +52,33 @@ const competitiveTiersWithIcons = competitiveTiers.tiers.filter(tier => tier.tie
     </ul>
   </section>
 
-  <section class="max-w-[1920px] my-16 text-white-play mx-auto flex flex-col items-center justify-center">
+  <section class="max-w-[1920px] bg-red-play py-16 text-white-play mx-auto flex flex-col items-center justify-center">
     <!-- Competitivo -->
     <h1 class="text-6xl font-semibold text-center mb-5 font-secondary">COMPETITIVO</h1>
-    <p class="mx-5 max-w-4xl text-center text-sm lg:text-lg">El modo competitivo de VALORANT es un modo de juego que tiene las mismas reglas y formato que el modo fuera de la clasificatoria, pero con un enfoque en la competitividad de alto riesgo. En este modo, los jugadores pueden competir para subir de rango, saltar niveles y compararse frente a otros usuarios</p>
+    <p class="mx-5 max-w-4xl text-center text-sm lg:text-lg mb-8">El modo competitivo de VALORANT es un modo de juego que tiene las mismas reglas y formato que el modo fuera de la clasificatoria, pero con un enfoque en la competitividad de alto riesgo. En este modo, los jugadores pueden competir para subir de rango, saltar niveles y compararse frente a otros usuarios</p>
 
-    <!-- Bento: Por hacer -->
+    <!-- Bento -->
+    <div class="px-3 grid grid-cols-3 grid-rows-3 w-full max-w-lg sm:max-w-2xl lg:max-w-4xl gap-2 lg:gap-3 h-[400px] sm:h-[650px] lg:h-[900px]">
+      {
+        BENTO_ITEMS_DATA.map(({ imageUrl, altText, style }) => (
+          <BentoItem imageUrl={imageUrl} altText={altText} style={style} />
+        ))
+      }
+    </div>
+  
   </section>
 
-  <section class="max-w-7xl my-16 text-white-play mx-auto flex flex-col items-center justify-center">
+  <section class="max-w-[1924px] bg-white-play py-16 mx-auto flex flex-col items-center justify-center">
     <!-- Rangos -->
-    <h1 class="text-6xl font-semibold text-center mb-5 font-secondary">RANGOS</h1>
-    <ul class="max-w-md sm:max-w-lg lg:max-w-xl flex flex-wrap gap-8 py-5 justify-center">
+    <h1 class="text-6xl font-semibold text-center mb-5 font-secondary text-black-play">RANGOS</h1>
+    <ul class="max-w-md sm:max-w-lg lg:max-w-5xl flex flex-wrap gap-2 sm:gap-3 lg:gap-4 py-5 justify-center">
       {
         competitiveTiersWithIcons.map((tier) => 
-          { 
-            return (
-              <li class="flex flex-col items-center gap-2">
-                <img
-                  class="w-24 h-24 sm:w-28 sm:h-28 lg:w-36 lg:h-36"
-                  src={tier.largeIcon}
-                  alt={tier.divisionName}
-                />
-                <p class="text-xl sm:text-3xl lg:text-4xl font-secondary">{tier.tierName}</p>
-              </li>
-            )
-          }
+          <TierCard
+            divisionName={tier.divisionName}
+            tierName={tier.tierName}
+            largeIcon={tier.largeIcon}
+          />
         )
       }
     </ul>

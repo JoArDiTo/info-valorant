@@ -1,0 +1,18 @@
+---
+interface Props {
+  imageUrl: string;
+  altText: string;
+  style: string;
+}
+
+const { imageUrl, altText, style } = Astro.props;
+---
+
+<div class=`${style} shadow-sm shadow-black overflow-hidden group rounded-lg`>
+  <img 
+    class="w-full h-full object-cover transition cursor-crosshair object-top group-hover:scale-110 duration-400" 
+    src={imageUrl}
+    alt={altText}
+  />
+</div>
+
