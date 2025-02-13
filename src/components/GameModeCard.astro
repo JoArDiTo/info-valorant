@@ -1,0 +1,40 @@
+---
+interface Props {
+  index: number;
+  displayName: string;
+  displayIcon: string | null;
+  description: string | null;
+}
+
+const { index, displayName, displayIcon, description } = Astro.props;
+
+const GAMEMODES_ENABLED = [
+  "Estándar",
+  "Deathmatch",
+  "Carrera de Armas",
+  "Deathmatch Definitivo",
+  "Spike Rush",
+  "Swiftplay"
+]
+---
+
+<li class="px-4 text-justify py-6">
+  <article class={`flex items-center ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} gap-x-8`}>
+    <img 
+      class="w-24 h-24 sm:w-32 sm:h-32 lg:w-44 lg:h-44"
+      src={displayIcon}
+      alt={`Icono del modo de juego ${displayName}`}
+    />
+    <div class="max-w-[440px] lg:max-w-full lg:w-[700px]">
+      <h2 class="text-3xl lg:text-4xl font-secondary mb-2">
+        {displayName.toUpperCase()}
+        {
+          !GAMEMODES_ENABLED.includes(displayName) && (
+            <p class="font-primary text-red-500 text-xs lg:text-lg">No disponible.</p>
+          )
+        }
+      </h2>
+      <p class="text-sm lg:text-lg">{description}</>
+    </div>
+  </article>
+</li>
