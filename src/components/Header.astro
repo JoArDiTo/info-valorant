@@ -1,5 +1,6 @@
 ---
 import Anchor from '@components/Anchor.astro'
+import Footer from './Footer.astro'
 
 const ROUTES = [
   {
@@ -50,7 +51,7 @@ const ROUTES = [
   <!-- Menú modal -->
   <div 
     id="menu-modal"
-    class="min-h-dvh opacity-0 inset-0 -z-10 transition-all flex flex-col items-center pt-5 bg-black overflow-hidden fixed duration-400 lg:hidden overflow-y-auto ">
+    class="min-h-dvh opacity-0 inset-0 -z-10 transition-all flex flex-col items-center pt-5 bg-black-play overflow-hidden fixed duration-400 lg:hidden overflow-y-auto ">
     <aside class="py-6 px-12 flex justify-between w-full items-center">
       <p class="font-primary text-3xl w-full">MENÚ</p>
       <button class="text-7xl w-9 h-9 flex flex-col justify-center cursor-pointer lg:hidden">
@@ -80,6 +81,7 @@ const ROUTES = [
         )
       }
     </nav>
+    <Footer />
   </div>
 
 </header>
