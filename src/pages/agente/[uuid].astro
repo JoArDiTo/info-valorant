@@ -86,7 +86,8 @@ const agentName = agent.displayName.toUpperCase();
 
     <div class="flex flex-wrap justify-center gap-y-6">
       {
-        agent.abilities.map((ability) => (
+        agent.abilities.map((ability) => ( 
+          ability.displayIcon && 
           <AbiltyCard
             displayIcon={ability.displayIcon}
             displayName={ability.displayName}

@@ -2,20 +2,22 @@
 interface Props {
   href: string
   label: string
+  available?: boolean
   isHome?: boolean
 }
 
-const { href, label, isHome } = Astro.props
+const { href, label, available, isHome } = Astro.props
 
 const homeStyle = isHome ? 'bg-[#cbd5e0] text-black home-polygon w-60 hover:bg-[#e2e8f0]' : ' w-36'
-const routeCurrentStyle = Astro.url.pathname === href ? 'font-bold' : 'font-light'
+const routeCurrentStyle = Astro.url.pathname === href ? 'font-bold pointer-events-none' : 'font-light'
 ---
 
 <a
-  class=`${homeStyle} ${routeCurrentStyle} py-3 text-center duration-400 transition-all hover:font-bold`
+  class=`${available ? '' : 'pointer-events-none'} ${homeStyle} ${routeCurrentStyle} relative py-3 text-center duration-400 transition-all hover:font-bold`
   href={href}
 >
   { label }
+  <span class=`${available ? 'invisible' : ''} absolute py-3 inset-0 pt-8 text-[10px] font-bold text-red-500`>PRÓXIMAMENTE</span>
 </a>
 
 <style>

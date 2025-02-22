@@ -1,27 +1,32 @@
 ---
 import Anchor from '@components/Anchor.astro'
-import Footer from './Footer.astro'
+import Footer from '@components/Footer.astro'
 
 const ROUTES = [
   {
     label: 'AGENTES',
-    href: '/agentes'
+    href: '/agentes',
+    available: true
   },
   {
     label: 'CONTENIDO',
-    href: '/contenido'
+    href: '/contenido',
+    available: false
   },
   {
     label: 'INICIO',
-    href: '/'
+    href: '/',
+    available: true
   },
   {
     label: 'MODALIDADES',
-    href: '/modalidades'
+    href: '/modalidades',
+    available: true
   },
   {
     label: 'STATS',
-    href: '/stats'
+    href: '/stats',
+    available: false
   }
 ]
 ---
@@ -32,7 +37,7 @@ const ROUTES = [
     style="clip-path: polygon(0 0, 100% 0, 91% 100%, 9% 100%);"
   >
     {
-      ROUTES.map(({ label, href }) => <Anchor href={href} label={label} isHome={href === '/'} />) 
+      ROUTES.map(({ label, href, available }) => <Anchor href={href} label={label} available={available} isHome={href === '/'} />) 
     }
   </nav>
 
@@ -62,7 +67,7 @@ const ROUTES = [
     </aside>
     
     <img 
-      class="w-52 content" 
+      class="w-52" 
       src="/logo-label.webp" 
       alt="Logo de Valorant en el menú modal"
     />
@@ -73,10 +78,14 @@ const ROUTES = [
         INICIO
       </a>
       {
-        ROUTES.map(({ label, href }) => 
+        ROUTES.map(({ label, href, available }) => 
          label !== 'INICIO' && 
-          <a class="w-full py-4 font-bold hover:bg-white hover:text-black transition-all duration-200 text-xl text-center" href={href}>
+          <a 
+            class={`w-full py-4 font-bold hover:bg-white hover:text-black transition-all duration-200 text-xl text-center flex justify-center items-center gap-x-3 ${available ? '' : 'pointer-events-none'}`} 
+            href={href}
+          >
             <p>{label}</p>
+            <span class="text-red-play text-[10px]">{available ? '' : 'PRÓXIMAMENTE'}</span>
           </a>
         )
       }
@@ -96,24 +105,24 @@ const ROUTES = [
   document.addEventListener('astro:page-load', () => {
     let isOpen = false
     const btnsToMenu = document.querySelectorAll('header button')
-    const hrsToMove = document.querySelectorAll('button .span-to-move')
-    const hrsStatic = document.querySelectorAll('button span:not(.span-to-move)')
+    const spansToMove = document.querySelectorAll('button .span-to-move')
+    const spansStatic = document.querySelectorAll('button span:not(.span-to-move)')
     const menuModal = document.getElementById('menu-modal')
 
     btnsToMenu.forEach((btnToMenu) => {
         btnToMenu.addEventListener('click', () => {
         // Rotación de las barras
-        hrsToMove[0].style.transform = isOpen ? '' : 'rotate(-45deg) translateY(-8px) translateX(8px)'
-        hrsToMove[1].style.transform = isOpen ? '' : 'rotate(45deg) translateY(8px) translateX(8px)'
-        hrsToMove[2].style.transform = isOpen ? '' : 'rotate(-45deg) translateY(-8px) translateX(8px)'
-        hrsToMove[3].style.transform = isOpen ? '' : 'rotate(45deg) translateY(8px) translateX(8px)'
+        spansToMove.forEach((span, index) => {
+          span.style.transform = isOpen ? '' : (index % 2 === 0 ? 'rotate(-45deg) translateY(-8px) translateX(8px)' : 'rotate(45deg) translateY(8px) translateX(8px)')
+        })
 
-        hrsStatic[0].style.opacity = isOpen ? '1' : '0'
-        hrsStatic[1].style.opacity = isOpen ? '1' : '0'
+        spansStatic.forEach(span => {
+          span.style.opacity = isOpen ? '1' : '0'
+        })
 
         // Quitar o mostrar el menú para móviles
         menuModal.style.opacity = isOpen ? '0' : '1'
-        menuModal.style.zIndex = isOpen ? '0' : '30'
+        menuModal.style.zIndex = isOpen ? '-10' : '30'
 
         // Cambio de estado
         isOpen = !isOpen
