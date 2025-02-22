@@ -11,4 +11,17 @@
 
 </div>
 
-En construcción...
+## Instalación
+Para clonar este repositorio y tener una copia local de la fan page, sigue estos pasos:
+
+```bash
+git clone git@github.com:JoArDiTo/info-valorant.git
+cd info-valorant
+```
+
+Para el uso local, se ejecuta:
+```bash
+npm run dev
+```
+
+> **Nota:** Esta aplicación utiliza la API pública de [VALORANT-API](https://valorant-api.com/).
