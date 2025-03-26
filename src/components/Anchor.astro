@@ -7,9 +7,10 @@ interface Props {
 }
 
 const { href, label, available, isHome } = Astro.props
+const currentPath = `/${Astro.url.pathname.split('/').slice(1)[0]}`
 
 const homeStyle = isHome ? 'bg-[#cbd5e0] text-black home-polygon w-60 hover:bg-[#e2e8f0]' : ' w-36'
-const routeCurrentStyle = Astro.url.pathname === href ? 'font-bold pointer-events-none' : 'font-light'
+const routeCurrentStyle = currentPath === href ? 'font-bold pointer-events-none' : 'font-light'
 ---
 
 <a

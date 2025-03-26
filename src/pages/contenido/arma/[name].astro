@@ -1,0 +1,184 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Layout from '@layouts/Layout.astro';
+import { getWeapons } from '@api/query';
+
+export const prerender = true
+
+export const getStaticPaths = ( async () => {
+  const agents = await getWeapons();
+
+  return agents.map((weapon) => {
+    return {
+      params: { name: weapon.displayName.toLowerCase() },
+      props: { weapon }
+    }
+  })
+}) satisfies GetStaticPaths;
+
+const { weapon } = Astro.props
+
+const skins = weapon.skins
+---
+
+<Layout title=`Info Valorant | Armas | ${weapon.displayName}` >
+  <section class="relative px-4 py-20 lg:py-36 max-w-[1920px] min-h-dvh mx-auto flex flex-col items-center gap-3 lg:gap-5 bg-black-play/50">
+    <button 
+      onclick="history.back()"
+      class="absolute left-4 top-4 lg:left-24 text-white cursor-pointer text-xl lg:text-4xl z-10 font-secondary transition-colors hover:text-red-play"
+    >
+      VOLVER ATRÁS
+    </button>
+
+    <article 
+      id="weapon-current"
+      class="relative flex items-center w-full max-w-3xl h-60 sm:h-96 bg-black-play rounded-2xl shadow-lg"
+    >
+      <img
+        src={weapon.displayIcon} 
+        alt={weapon.displayName}
+        transition:name={`weapon-image-${weapon.uuid}`}
+        class="w-full h-56 sm:h-72 object-contain"
+      />
+      <h1 
+        class="absolute bottom-0 right-0 pr-3 pb-1.5 text-2xl text-white-play text-right font-primary"
+      >
+        { weapon.displayName }
+      </h1>
+    </article>
+
+    <h1 class="text-7xl text-white-play font-semibold text-center py-5 font-secondary">SKINS</h1>
+
+    <aside id="skin-selector" class="w-full flex justify-center flex-wrap gap-3">
+      <button
+        class="cursor-pointer rounded-md bg-white/10 skin-selected"
+        data-image-src={ weapon.displayIcon }
+        data-name-src={ weapon.displayName }
+      >
+        <img 
+          src={weapon.displayIcon}
+          alt={weapon.displayName}
+          class="size-16 lg:size-36 object-contain"
+        />
+      </button>
+      {
+        skins.map((skin) => (
+          skin.displayIcon && 
+          skin.displayName !== 'Diseño favorito aleatorio' &&
+          !skin.displayName.includes('Estándar') &&
+          <button 
+            class="cursor-pointer rounded-md bg-white/10"
+            data-image-src={ skin.displayIcon } 
+            data-name-src={ skin.displayName }
+          >
+            <img 
+              src={skin.displayIcon}
+              alt={skin.displayName}
+              class="size-16 lg:size-36 object-contain"
+            />
+          </button>
+        ))
+      }
+
+      </button>
+    </aside>
+  </section>
+</Layout>
+
+<style>
+  #skin-selector {
+    scrollbar-width: thin;
+    scrollbar-color: #ECE8E1 #0F1923;
+  }
+
+  .skin-selected {
+    background-color: #ECE8E1;
+    color: #0F1923;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const weaponButtons = document.querySelectorAll('#skin-selector button');
+    
+    weaponButtons.forEach((button) => {
+      button.addEventListener('click', () => handleChangeSkin(button));
+    })
+    
+
+    const handleChangeSkin = (button: Element) => {
+      const weaponCurrent = document.getElementById('weapon-current');
+      
+      const isHTMLElement = weaponCurrent instanceof HTMLElement;
+      if (!isHTMLElement) return;
+      
+      const imageSelected = button.getAttribute('data-image-src');
+      const nameSelected = button.getAttribute('data-name-src');
+      if (!imageSelected || !nameSelected) return;
+
+      const imageCurrent = weaponCurrent.querySelector('img');
+      const nameCurrent = weaponCurrent.querySelector('h1');
+      if (!imageCurrent || !nameCurrent) return;
+
+      imageCurrent.src = imageSelected;
+      nameCurrent.textContent = nameSelected;
+
+      weaponButtons.forEach((button) => button.classList.remove('skin-selected'))
+
+      button.classList.add('skin-selected');
+    }
+  })
+</script>
+
+  
+    <!-- <div id="skin-selector" class="w-full max-w-md bg-black-play lg:rounded-l-xl flex flex-col h-80 overflow-auto">
+      <button 
+        class="py-2 lg:py-3 text-md lg:text-xl text-white-play cursor-pointer skin-selected"
+        data-image-src={ weapon.displayIcon }
+      >
+        { weapon.displayName } Clásica
+      </button>
+      {
+        skins.map((skin) => (
+          skin.displayIcon && 
+          skin.displayName !== 'Diseño favorito aleatorio' &&
+          !skin.displayName.includes('Estándar') &&
+          <button 
+            class="py-3 pl-2 text-md lg:text-xl text-white-play cursor-pointer"
+            data-image-src={ skin.displayIcon } 
+          >
+            { skin.displayName }
+          </button>
+        ))
+      }
+      
+    </div> -->
+
+    <!-- <article id="weapon-current" class="relative w-full max-w-md lg:h-80 flex flex-col justify-between items-center bg-black/50 px-4 py-8 rounded-2xl shadow-lg">
+      <img
+      src={weapon.displayIcon} 
+      alt={weapon.displayName}
+      transition:name={`weapon-image-${weapon.uuid}`}
+      class="w-full max-w-xl h-40 lg:h-72 object-contain"
+      />
+      <h1 
+        class="absolute bottom-0 right-0 pr-4 pb-2 text-xl lg:text-3xl font-primary font-bold text-white text-right"
+      >
+        {weapon.displayName}
+      </h1>
+    </article> -->
+
+    <!-- <article id="weapon-current" class="flex flex-col items-center mt-8 lg:mt-0 w-full max-w-3xl">
+      <img
+      src={weapon.displayIcon} 
+      alt={weapon.displayName}
+      transition:name={`weapon-image-${weapon.uuid}`}
+      class="w-full max-w-3xl h-48 lg:h-72 object-contain"
+      />
+      <h1 
+        class="text-xl lg:text-4xl font-primary font-bold text-white text-center mb-4"
+      >
+        {weapon.displayName}
+      </h1>
+    </article> -->

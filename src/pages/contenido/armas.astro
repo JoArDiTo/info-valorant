@@ -1,0 +1,35 @@
+---
+import Layout from '@layouts/Layout.astro';
+import { getWeapons } from '@api/query.ts';
+import WeaponCard from '@components/WeaponCard.astro';
+
+const weapons = await getWeapons();
+---
+
+<Layout title="Info Valorant | Armas">
+  <section class="relative max-w-[1920px] bg-black-play py-16 text-white-play mx-auto min-h-dvh flex flex-col items-center">
+    <button 
+      onclick="history.back()"
+      class="absolute left-4 top-4 lg:left-24 text-white cursor-pointer text-xl lg:text-4xl z-10 font-secondary transition-colors hover:text-red-play"
+    >
+      VOLVER ATRÁS
+    </button>
+    <h1 class="text-7xl font-semibold text-center mb-5 font-secondary">ARMAS</h1>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 mt-4">
+      {
+        weapons.map(({ displayName, displayIcon, uuid }) => (
+          <WeaponCard displayName={displayName} displayIcon={displayIcon} uuid={uuid} />
+        ))
+      }
+    </div>
+  </section>
+</Layout>
+
+<style>
+  section {
+    background-image: url('/content/weapons-found.webp');
+    background-size: cover;
+    background-position: center;
+  }
+</style>
+

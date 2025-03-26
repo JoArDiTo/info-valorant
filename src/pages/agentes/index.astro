@@ -7,10 +7,10 @@ const agents = await getAgents();
 ---
 
 <Layout title="Info Valorant | Agentes">
-  <section class="max-w-6xl my-16 px-4 mx-auto flex flex-col text-white">
+  <section class="max-w-[1920px] bg-black-play py-16 text-white-play mx-auto flex flex-col items-center justify-center">
     <h1 class="text-7xl font-semibold text-center mb-5 font-secondary">AGENTES</h1>
 
-    <article class="grid justify-items-center gap-y-6 sm:gap-y-9 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 lg:gap-y-13 mt-8">
+    <article class="grid justify-items-center grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-7 mt-8">
       {
         agents.map(({ uuid, displayName, displayIcon, bustPortrait, backgroundGradientColors, role }) => (
           <AgentCard
